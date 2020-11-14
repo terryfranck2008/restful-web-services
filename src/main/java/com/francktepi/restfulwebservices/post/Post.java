@@ -1,34 +1,51 @@
 package com.francktepi.restfulwebservices.post;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.francktepi.restfulwebservices.user.User;
+
+@Entity
 public class Post {
-	private long id;
-	private String message;
-	private long userId;
 	
-	public Post(long id, String message, long userId) {
+	@Id
+	@GeneratedValue
+	private Integer id;
+	private String description;
+	
+	//relationship between user and post entities. user => many posts; post => belong to one user
+	// this relation is called ManytoOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private User user;
+	
+	public Post(Integer id, String description, User user) {
 		super();
 		this.id = id;
-		this.message = message;
-		this.userId = userId;
+		this.description = description;
+		this.user = user;
 	}
-	
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getMessage() {
-		return message;
+	public String getDescription() {
+		return description;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
